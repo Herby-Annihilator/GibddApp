@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GibddApp.ConsoleClient", "GibddApp.ConsoleClient\GibddApp.ConsoleClient.csproj", "{A654F2AE-3975-49B8-920E-A1297F426A4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GibddApp.Core", "GibddApp.Core\GibddApp.Core.csproj", "{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A654F2AE-3975-49B8-920E-A1297F426A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A654F2AE-3975-49B8-920E-A1297F426A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A654F2AE-3975-49B8-920E-A1297F426A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A654F2AE-3975-49B8-920E-A1297F426A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5C70A4B-C051-4F03-9791-C7DA26BA58F9}
+	EndGlobalSection
+EndGlobal
