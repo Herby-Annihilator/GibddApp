@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.Tests", "GibddApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GibddApp.DataService", "GibddApp.DataService\GibddApp.DataService.csproj", "{FC799FF5-61B2-43EF-82E4-4D929C766A47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GibddApp.API", "GibddApp.API\GibddApp.API.csproj", "{EAD7B02C-F4CB-43D2-A07E-753D0793A700}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FC799FF5-61B2-43EF-82E4-4D929C766A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC799FF5-61B2-43EF-82E4-4D929C766A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC799FF5-61B2-43EF-82E4-4D929C766A47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
