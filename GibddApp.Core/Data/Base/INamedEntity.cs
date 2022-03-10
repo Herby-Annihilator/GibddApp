@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GibddApp.Core.Data
+namespace GibddApp.Core.Data.Base
 {
-    public enum Role
+    public interface INamedEntity : IEntity
     {
-        Admin, GibddEmployee, DpsEmployee
+        string Name { get; set; }
     }
 }

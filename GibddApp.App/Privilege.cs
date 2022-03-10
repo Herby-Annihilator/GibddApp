@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GibddApp.Core
+namespace GibddApp.App
 {
     /// <summary>
     /// Privilege. Values of a power of two are allowed 
