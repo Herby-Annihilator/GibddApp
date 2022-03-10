@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GibddApp.App.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -7,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace GibddApp.App
 {
-    internal class SessionManager
+    public class SessionManager
     {
         private List<Session> _sessionTable;
         private static SessionManager _instance;
-        internal static SessionManager Instance => _instance ??= new SessionManager();
+        public static SessionManager Instance => _instance ??= new SessionManager();
         private SessionManager()
         {
             _sessionTable = new List<Session>();
         }
 
-        internal Task<Guid> CreateSessionFor(Account account)
+        public Task<Guid> CreateSessionFor(Account account)
         {
             Task<Guid> task = Task.Run(() => 
             {
@@ -33,5 +34,23 @@ namespace GibddApp.App
             });
             return task;
         }
+
+        public Task<Account> GetAccountInSession(Guid sessionId)
+        {
+            return Task.Run(() => 
+            {
+                Session session = _sessionTable.Find((session) => session.SessionId == sessionId);
+                if (session == null || session == default)
+                    throw new SessionManagerException("There is no such session with specified sessionId");
+                return session.Account;
+            });
+        }
+
+        public Task<bool> CloseSessionWithSpecifiedUid(Guid uid) => Task.Run(
+            () => _sessionTable.Remove(
+                _sessionTable.Find(
+                    (session) => session.SessionId == uid)
+                )
+            );
     }
 }
