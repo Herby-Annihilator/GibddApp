@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GibddApp.App.Data
+namespace GibddApp.App.Interfaces
 {
-    public class Account
+    public interface IServiceExecutor
     {
-        public int Id { get; private set; }
+
     }
 }
