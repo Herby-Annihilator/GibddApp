@@ -15,15 +15,23 @@ namespace GibddApp.App.Services
         {
             _dataStorage = dataStorage;
         }
-        public async Task Login(string userName, string password)
+        public async Task<Account> Login(string userName, string password)
         {
-            Account acc = await _dataStorage.GetAccountAsync(userName, password);
-            if (acc == null)
+            try
             {
-                throw new LoginServiceException("Login or password is incorrect");
+                Account acc = await _dataStorage.GetAccountAsync(userName, password);
+                if (acc == null)
+                {
+                    throw new LoginServiceException("Login or password is incorrect");
+                }
+                SessionManager sessionManager = SessionManager.Instance;
+                await sessionManager.CreateSessionFor(acc);
+                return acc;
             }
-            SessionManager sessionManager = SessionManager.Instance;
-            await sessionManager.CreateSessionFor(acc);
+            catch (Exception ex)
+            {
+                throw new LoginServiceException(ex.Message);
+            }           
         }
     }
 }
