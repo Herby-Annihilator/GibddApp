@@ -11,10 +11,8 @@ namespace GibddApp.Core.Data.Car
     {
         public CarMark CarMark { get; set; }
 
-        public CarModel(int id, string name, CarMark carMark)
+        public CarModel(int id, string name, CarMark carMark) : base(name, id)
         {
-            Id = id;
-            Name = name;
             CarMark = carMark;
         }
     }

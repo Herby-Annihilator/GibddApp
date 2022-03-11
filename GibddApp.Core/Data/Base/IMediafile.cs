@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GibddApp.Core.Data.User
+namespace GibddApp.Core.Data.Base
 {
-    public enum Sex
+    public interface IMediafile
     {
-        Male, Female
+        byte[] GetFileAsByteArray();
     }
 }

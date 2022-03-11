@@ -12,5 +12,11 @@ namespace GibddApp.Core.Data.Base
         protected int _id;
         public virtual string Name { get => _name; set => _name = (string)value.Clone(); }
         public virtual int Id { get => _id; set => _id = value; }
+
+        public NamedEntity(string name, int id)
+        {
+            Name = name;
+            Id = id;
+        }
     }
 }

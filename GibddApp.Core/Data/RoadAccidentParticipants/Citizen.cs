@@ -1,13 +1,14 @@
-﻿using System;
+﻿using GibddApp.Core.Data.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GibddApp.Core.Data.User
+namespace GibddApp.Core.Data.RoadAccidentParticipants
 {
-    public class UserData
+    public class Citizen : IEntity
     {
         // required
         [Required]
@@ -27,18 +28,21 @@ namespace GibddApp.Core.Data.User
         public Address WorkPlaceAddress { get; set; } = Address.Invalid();
         public Address RegistrationAddress { get; set; } = Address.Invalid();
         public Address ResidentialAddress { get; set; } = Address.Invalid();
+        private int _id;
+        public int Id { get => _id; set => _id = value; }
 
-        public UserData(string firstName, string lastName, Sex sex)
+        public Citizen(string firstName, string lastName, Sex sex)
         {
             FirstName = firstName;
             LastName = lastName;
             Sex = sex;
         }
 
-        public UserData(string firstName, string lastName, Sex sex,
+        public Citizen(int id, string firstName, string lastName, Sex sex,
             string patronymic, string phoneNumber, string email, string jobTitle, string workPlaceName,
             Address workPlaceAddress, Address registrationAddress, Address residentialAddress)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             Sex = sex;

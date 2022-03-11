@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GibddApp.Core.Data.User
+namespace GibddApp.Core.Data
 {
     public class Address
     {

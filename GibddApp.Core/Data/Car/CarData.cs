@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GibddApp.Core.Data.Car
 {
-    public class CarData
+    public class CarData : IEntity
     {
         public CarMark Mark { get; set; }
         public CarModel Model { get; set; }
@@ -23,5 +23,7 @@ namespace GibddApp.Core.Data.Car
         public DateTime RegistrationDate { get; set; }
 
         public NamedEntity CarCategory { get; set; }
+        private int _id;
+        public int Id { get => _id; set => _id = value; }
     }
 }
