@@ -1,6 +1,5 @@
 ﻿using GibddApp.Core.Data.Car;
 using GibddApp.Core.Data.Gibdd;
-using GibddApp.Core.Data.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;

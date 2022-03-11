@@ -1,5 +1,4 @@
 ﻿using GibddApp.Core.Data.Base;
-using GibddApp.Core.Data.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
