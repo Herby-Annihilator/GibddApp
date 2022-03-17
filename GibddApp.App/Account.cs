@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GibddApp.App.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GibddApp.App
 {
-    public class Account
+    public class Account : PrivilegedEntity
     {
         public int Id { get; private set; }
         public string UserName { get; private set; }

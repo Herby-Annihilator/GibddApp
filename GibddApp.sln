@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.ConsoleClient", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.Core", "GibddApp.Core\GibddApp.Core.csproj", "{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.DataService", "GibddApp.DataService\GibddApp.DataService.csproj", "{FC799FF5-61B2-43EF-82E4-4D929C766A47}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.API", "GibddApp.API\GibddApp.API.csproj", "{EAD7B02C-F4CB-43D2-A07E-753D0793A700}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.App", "GibddApp.App\GibddApp.App.csproj", "{707371AA-D697-4403-8024-5D539823C6BD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.App.Tests", "GibddApp.App.Tests\GibddApp.App.Tests.csproj", "{69BB6C63-7E17-4FA4-8158-CEB18EC3DCBB}"
@@ -19,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.App.Tests", "Gibdd
 		{707371AA-D697-4403-8024-5D539823C6BD} = {707371AA-D697-4403-8024-5D539823C6BD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GibddApp.DataRealization", "GibddApp.DataRealization\GibddApp.DataRealization.csproj", "{37B53A73-9634-4571-8BB8-8AAAEA3CECB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GibddApp.DataRealization", "GibddApp.DataRealization\GibddApp.DataRealization.csproj", "{37B53A73-9634-4571-8BB8-8AAAEA3CECB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GibddApp.API", "GibddApp.API\GibddApp.API.csproj", "{418FFF36-04F3-4BFC-9A19-B5A8A48D49FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +33,6 @@ Global
 		{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7C7869F-D7F1-483A-B67F-C9F0A212FE6A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC799FF5-61B2-43EF-82E4-4D929C766A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC799FF5-61B2-43EF-82E4-4D929C766A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC799FF5-61B2-43EF-82E4-4D929C766A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC799FF5-61B2-43EF-82E4-4D929C766A47}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EAD7B02C-F4CB-43D2-A07E-753D0793A700}.Release|Any CPU.Build.0 = Release|Any CPU
 		{707371AA-D697-4403-8024-5D539823C6BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{707371AA-D697-4403-8024-5D539823C6BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{707371AA-D697-4403-8024-5D539823C6BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,6 +45,10 @@ Global
 		{37B53A73-9634-4571-8BB8-8AAAEA3CECB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37B53A73-9634-4571-8BB8-8AAAEA3CECB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37B53A73-9634-4571-8BB8-8AAAEA3CECB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{418FFF36-04F3-4BFC-9A19-B5A8A48D49FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{418FFF36-04F3-4BFC-9A19-B5A8A48D49FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{418FFF36-04F3-4BFC-9A19-B5A8A48D49FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{418FFF36-04F3-4BFC-9A19-B5A8A48D49FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

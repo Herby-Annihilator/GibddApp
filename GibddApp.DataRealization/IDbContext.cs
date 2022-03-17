@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GibddApp.App.Interfaces
+namespace GibddApp.DataRealization
 {
-    public interface IServiceExecutor
+    public interface IDbContext
     {
-
+        string ConnectionString { get; }
     }
 }
