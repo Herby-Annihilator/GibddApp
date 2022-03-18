@@ -30,5 +30,17 @@ namespace GibddApp.API.Controllers
             else
                 return NotFound();
         }
+
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<Color>>> GetAll()
+        {
+            IEnumerable<Color> colors = await _colorRepository.GetAll();
+            if (colors != null)
+                return Ok(colors);
+            else
+                return NotFound();
+        }
     }
 }
