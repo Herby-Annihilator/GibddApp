@@ -5,6 +5,8 @@ using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using System.Text;
+using System.Reflection;
 
 namespace GibddApp.API.Services
 {
@@ -26,7 +28,7 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"insert into {TableName()} ({entity.GetProperties()}) values ({entity.GetPropertiesValues()});";
+            command.CommandText = $"insert into {TableName()} ({GetPropertiesOf(entity)}) values ({GetPropertiesValuesOf(entity)});";
             await connection.OpenAsync(cancellationToken);
             await command.ExecuteNonQueryAsync(cancellationToken);
             await connection.CloseAsync();
@@ -37,7 +39,7 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"delete from {TableName()} where id = {id};";
+            command.CommandText = $"delete from {TableName()} where {GetAttributeNameInDbOfProperty("Id")} = {id};";
             await connection.OpenAsync(cancellationToken);
             await command.ExecuteNonQueryAsync(cancellationToken);
             await connection.CloseAsync();
@@ -49,13 +51,14 @@ namespace GibddApp.API.Services
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
             command.CommandText = $"select * from {TableName()};";
+            await connection.OpenAsync();
             DbDataReader reader = await command.ExecuteReaderAsync(cancellationToken);
             T entity;
             List<T> entities = new List<T>();
             while (reader.Read())
             {
                 entity = new T();
-                await entity.SetPropertiesValues(reader);
+                await SetPropertiesValuesOf(entity, reader);
                 entities.Add(entity);
             }
             await reader.CloseAsync();
@@ -68,11 +71,14 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"select * from {TableName()} where id = {id};";
+            command.CommandText = $"select * from {TableName()} where {GetAttributeNameInDbOfProperty("Id")} = {id};";
+            await connection.OpenAsync();
             DbDataReader reader = await command.ExecuteReaderAsync(cancellationToken);
             T entity = new T();
+            if (!reader.HasRows)
+                return default(T);
             reader.Read();
-            await entity.SetPropertiesValues(reader);
+            await SetPropertiesValuesOf(entity, reader);
             await reader.CloseAsync();
             await connection.CloseAsync();
             return entity;
@@ -83,7 +89,7 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"update {TableName()} set ({entity.GetProperties()}) = ({entity.GetPropertiesValues()});";
+            command.CommandText = $"update {TableName()} set ({GetPropertiesOf(entity)}) = ({GetPropertiesValuesOf(entity)});";
             await connection.OpenAsync(cancellationToken);
             await command.ExecuteNonQueryAsync(cancellationToken);
             await connection.CloseAsync();
@@ -106,5 +112,86 @@ namespace GibddApp.API.Services
         }
 
         protected string TableName() => _tableName ??= SetTableName();
+
+        protected virtual string GetPropertiesOf(T entity)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            Type type = entity.GetType();
+
+            PropertyInfo[] properties = type.GetProperties();
+            foreach (var item in properties)
+            {
+                var attributes = item.GetCustomAttributes();
+                foreach (Attribute attribute in attributes)
+                {
+                    if (attribute is DbAttributeNameAttribute dbAttributeNameAttribute)
+                    {
+                        stringBuilder.Append($"{dbAttributeNameAttribute.AttributeName}, ");
+                        break;
+                    }
+                }
+            }
+            string result = stringBuilder.ToString();
+            return result.Substring(0, result.Length - 2);
+        }
+        protected virtual string GetPropertiesValuesOf(T entity)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            Type type = entity.GetType();
+            PropertyInfo[] properties = type.GetProperties();
+            foreach (var property in properties)
+            {
+                builder.Append($"{property.GetValue(entity).ToString()}, ");
+            }
+            string result = builder.ToString();
+            return result.Substring(0, result.Length - 2);
+        }
+
+        protected virtual Task SetPropertiesValuesOf(T entity, DbDataReader dataReader)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                Type type = entity.GetType();
+                PropertyInfo[] properties = type.GetProperties();
+                for (int i = 0; i < properties.Length; i++)
+                {
+                    object[] attributes = properties[i].GetCustomAttributes(false);
+                    foreach (Attribute attribute in attributes)
+                    {
+                        if (attribute is DbAttributeNameAttribute nameAttribute)
+                        {
+                            properties[i].SetValue(entity, dataReader[nameAttribute.AttributeName]);
+                            break;
+                        }
+                    }                   
+                }
+            });
+        }
+
+        protected virtual string GetAttributeNameInDbOfProperty(string propertyName)
+        {
+            Type type = typeof(T);
+            string result = propertyName;
+            PropertyInfo[] properties = type.GetProperties();
+            object[] attributes;
+            foreach (var property in properties)
+            {
+                if (property.Name == propertyName)
+                {
+                    attributes = property.GetCustomAttributes(false);
+                    foreach (var attribute in attributes)
+                    {
+                        if (attribute is DbAttributeNameAttribute nameAttribute)
+                        {
+                            result = nameAttribute.AttributeName;
+                            break;
+                        }
+                    }
+                    break;
+                }                
+            }
+            return result;
+        }
     }
 }

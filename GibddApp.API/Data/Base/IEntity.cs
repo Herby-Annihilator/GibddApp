@@ -5,11 +5,6 @@ namespace GibddApp.API.Data.Base
 {
     public interface IEntity
     {
-        int Id { get; }
-
-        string GetProperties();
-        string GetPropertiesValues();
-
-        Task SetPropertiesValues(DbDataReader dataReader);
+        int Id { get; set; }
     }
 }
