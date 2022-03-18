@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GibddApp.API.Services.Base
 {
-    public interface IRepository<T> where T : IEntity
+    public interface IRepository<T> where T : IEntity, new()
     {
         Task<T> GetById(int id, CancellationToken cancellationToken = default);
 
