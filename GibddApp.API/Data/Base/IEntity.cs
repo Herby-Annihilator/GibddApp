@@ -5,7 +5,7 @@ namespace GibddApp.API.Data.Base
 {
     public interface IEntity
     {
-        int Id { get; protected set; }
+        int Id { get; }
 
         string GetProperties();
         string GetPropertiesValues();

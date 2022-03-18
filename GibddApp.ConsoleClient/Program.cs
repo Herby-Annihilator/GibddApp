@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
+using GibddApp.API;
+using GibddApp.API.Data;
 
 namespace GibddApp.ConsoleClient
 {
@@ -14,23 +16,9 @@ namespace GibddApp.ConsoleClient
         {
             try
             {
-                NpgsqlConnection connection = new NpgsqlConnection(DefaultConnectionString());
-                Task taskCreate = CreateAddressTableAsync(connection);
-                Console.WriteLine("***********Main thread*********");
-                taskCreate.Wait();
-
-                Task taskInsert = InsertRecordsToAddressTable(5, connection);
-                Console.WriteLine("Waiting for inserting data");
-                taskInsert.Wait();
-
-                Task taskUpdate = UpdateCountrysInAddressTable("Russian Federation", "Rissia", connection);
-                Console.WriteLine("Waiting for updating data");
-                taskUpdate.Wait();
-
-                Task taskDelete = DeleteAddressWithCityName("Barnaul", connection);
-                Console.WriteLine("Waiting for deleting data");
-                taskDelete.Wait();
-
+                Color color = new Color() { Name = "color_name" };
+                string properties = color.GetProperties();
+                string values = color.GetPropertiesValues();
             }
             catch (Exception ex)
             {

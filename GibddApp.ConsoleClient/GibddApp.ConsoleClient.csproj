@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GibddApp.API\GibddApp.API.csproj" />
     <ProjectReference Include="..\GibddApp.Core\GibddApp.Core.csproj" />
   </ItemGroup>
 

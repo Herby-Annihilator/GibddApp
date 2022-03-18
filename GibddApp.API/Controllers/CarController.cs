@@ -13,59 +13,59 @@ namespace GibddApp.API.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        protected string _connectionString;
+        //protected string _connectionString;
 
-        public CarController(IConfiguration configuration)
-        {
-            _connectionString = configuration["ConnectionString"];
-        }
+        //public CarController(IConfiguration configuration)
+        //{
+        //    _connectionString = configuration["ConnectionString"];
+        //}
 
-        [HttpGet("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult<CarData>> GetByIdAsync(int id)
-        {
+        //[HttpGet("{id:int}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //public async Task<IActionResult<CarData>> GetByIdAsync(int id)
+        //{
             
-        }
+        //}
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult<IEnumerable<CarData>>> GetAllAsync()
-        {
+        //[HttpGet]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //public async Task<IActionResult<IEnumerable<CarData>>> GetAllAsync()
+        //{
             
-        }
+        //}
 
-        [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteByIdAsync(int id)
-        {
+        //[HttpDelete("{id:int}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> DeleteByIdAsync(int id)
+        //{
 
-        }
+        //}
 
-        [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteAsync(CarData carData)
-        {
+        //[HttpDelete("{id:int}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> DeleteAsync(CarData carData)
+        //{
 
-        }
+        //}
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateCarInDataBaseAsync(CarData carData)
-        {
+        //[HttpPost]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> CreateCarInDataBaseAsync(CarData carData)
+        //{
 
-        }
+        //}
 
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateAsync(CarData carData)
-        {
+        //[HttpPut]
+        //[ProducesResponseType(StatusCodes.Status202Accepted)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> UpdateAsync(CarData carData)
+        //{
 
-        }
+        //}
     }
 }
