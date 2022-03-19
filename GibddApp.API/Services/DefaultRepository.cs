@@ -28,7 +28,8 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"insert into {TableName()} ({GetPropertiesOf(entity)}) values ({GetPropertiesValuesOf(entity)});";
+            command.CommandText = $"insert into {TableName()} ({GetPropertiesWithoutProperty(entity, nameof(entity.Id))})" +
+                $" values ({GetPropertiesValuesWithoutProperty(entity, nameof(entity.Id))});";
             await connection.OpenAsync(cancellationToken);
             await command.ExecuteNonQueryAsync(cancellationToken);
             await connection.CloseAsync();
@@ -39,7 +40,7 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"delete from {TableName()} where {GetAttributeNameInDbOfProperty("Id")} = {id};";
+            command.CommandText = $"delete from {TableName()} where {GetDbAttributeNameOfProperty("Id")} = {id};";
             await connection.OpenAsync(cancellationToken);
             await command.ExecuteNonQueryAsync(cancellationToken);
             await connection.CloseAsync();
@@ -71,9 +72,10 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"select * from {TableName()} where {GetAttributeNameInDbOfProperty("Id")} = {id};";
-            await connection.OpenAsync();
-            DbDataReader reader = await command.ExecuteReaderAsync(cancellationToken);
+            command.CommandText = $"select * from {TableName()} where {GetDbAttributeNameOfProperty("Id")} = {id};";
+            connection.Open();
+            //DbDataReader reader = await command.ExecuteReaderAsync(cancellationToken);
+            DbDataReader reader = command.ExecuteReader();
             T entity = new T();
             if (!reader.HasRows)
                 return default(T);
@@ -89,7 +91,9 @@ namespace GibddApp.API.Services
             DbConnection connection = _dbContext.Connection;
             DbCommand command = _dbContext.Command;
             command.Connection = connection;
-            command.CommandText = $"update {TableName()} set ({GetPropertiesOf(entity)}) = ({GetPropertiesValuesOf(entity)});";
+            command.CommandText = $"update {TableName()} set ({GetPropertiesWithoutProperty(entity, nameof(entity.Id))})" +
+                $" = ({GetPropertiesValuesWithoutProperty(entity, nameof(entity.Id))}) " +
+                $"where {GetDbAttributeNameOfProperty(nameof(entity.Id))} = {entity.Id};";
             await connection.OpenAsync(cancellationToken);
             await command.ExecuteNonQueryAsync(cancellationToken);
             await connection.CloseAsync();
@@ -134,6 +138,31 @@ namespace GibddApp.API.Services
             string result = stringBuilder.ToString();
             return result.Substring(0, result.Length - 2);
         }
+
+        protected virtual string GetPropertiesWithoutProperty(T entity, string propertyName)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            Type type = entity.GetType();
+
+            PropertyInfo[] properties = type.GetProperties();
+            foreach (var item in properties)
+            {
+                if (item.Name != propertyName)
+                {
+                    var attributes = item.GetCustomAttributes();
+                    foreach (Attribute attribute in attributes)
+                    {
+                        if (attribute is DbAttributeNameAttribute dbAttributeNameAttribute)
+                        {
+                            stringBuilder.Append($"{dbAttributeNameAttribute.AttributeName}, ");
+                            break;
+                        }
+                    }
+                }   
+            }
+            string result = stringBuilder.ToString();
+            return result.Substring(0, result.Length - 2);
+        }
         protected virtual string GetPropertiesValuesOf(T entity)
         {
             StringBuilder builder = new StringBuilder();
@@ -143,6 +172,33 @@ namespace GibddApp.API.Services
             foreach (var property in properties)
             {
                 builder.Append($"{property.GetValue(entity).ToString()}, ");
+            }
+            string result = builder.ToString();
+            return result.Substring(0, result.Length - 2);
+        }
+
+        protected virtual string GetPropertiesValuesWithoutProperty(T entity, string propertyName)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            Type type = entity.GetType();
+            PropertyInfo[] properties = type.GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.Name != propertyName)
+                {
+                    if (property.PropertyType == typeof(DateTime))
+                    {
+                        var dateTime = (DateTime)property.GetValue(entity);
+                        builder.Append($"make_date({dateTime.Year}, {dateTime.Month}, {dateTime.Day}), ");
+                    }
+                    else if (property.PropertyType == typeof(string))
+                    {
+                        builder.Append($"'{property.GetValue(entity).ToString()}', ");
+                    }
+                    else
+                        builder.Append($"{property.GetValue(entity).ToString()}, ");
+                }  
             }
             string result = builder.ToString();
             return result.Substring(0, result.Length - 2);
@@ -169,7 +225,7 @@ namespace GibddApp.API.Services
             });
         }
 
-        protected virtual string GetAttributeNameInDbOfProperty(string propertyName)
+        protected virtual string GetDbAttributeNameOfProperty(string propertyName)
         {
             Type type = typeof(T);
             string result = propertyName;

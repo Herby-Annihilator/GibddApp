@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Npgsql;
 using GibddApp.API;
 using GibddApp.API.Data;
+using GibddApp.API.Services;
 
 namespace GibddApp.ConsoleClient
 {
@@ -16,15 +17,39 @@ namespace GibddApp.ConsoleClient
         {
             try
             {
-                Color color = new Color() { Name = "color_name" };
-                string properties = color.GetProperties();
-                string values = color.GetPropertiesValues();
+                //Test();
+                TestColor();
+                //CheckConnectionAndCloseIt();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Console.ReadKey(true);
             }
+        }
+
+        static async void Test()
+        {
+            NpgsqlDbContext db = new NpgsqlDbContext("Host=192.168.1.123;Port=5433;Database=postgres;Username=postgres;Password=qwerty;");
+            DefaultRepository<Passport> defaultRepository = new DefaultRepository<Passport>(db);
+
+
+
+            var result = await defaultRepository.GetById(1);
+
+            var resultList = await defaultRepository.GetAll();
+        }
+
+        static async void TestColor()
+        {
+            NpgsqlDbContext db = new NpgsqlDbContext("Host=192.168.1.123;Port=5432;Database=postgres;Username=postgres;Password=qwerty;");
+            DefaultRepository<Color> defaultRepository = new DefaultRepository<Color>(db);
+
+
+
+            var result = await defaultRepository.GetById(1);
+            Console.WriteLine(result);
+            var resultList = await defaultRepository.GetAll();
         }
 
         static void CheckConnectionAndCloseIt()
@@ -40,11 +65,11 @@ namespace GibddApp.ConsoleClient
 
         static string DefaultConnectionString()
         {
-            string host = "192.168.1.134";
+            string host = "192.168.1.123";
             string database = "postgres";
             string user = "postgres";
             string password = "qwerty";
-            int port = 5432;
+            int port = 5433;
 
             Console.WriteLine("\r\n\\\\---------------------------------//");
             Console.WriteLine($"Host: {host}");

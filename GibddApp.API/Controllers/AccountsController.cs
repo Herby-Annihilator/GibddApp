@@ -30,19 +30,8 @@ namespace GibddApp.API.Controllers
         [HttpGet]
         public IActionResult GetDafaultUser()
         {
-            Citizen userData = new Citizen()
-            {
-                FirstName = "firstName",
-                LastName = "lastName",
-                Patronymic = "patronymic",
-                WorkPlaceName = "workPlace",
-                Position = "position",
-                Phone = "phone",
-                RegistrationAddress = new Address() { CountryName = "country", RegionName = "region", CityName = "city", StreetName = "street", HouseNumber = 1},
-                ResidentialAddress = new Address() { CountryName = "country", RegionName = "region", CityName = "city", StreetName = "street", HouseNumber = 1},
-                WorkPlaceAddress = new Address() { CountryName = "country", RegionName = "region", CityName = "city", StreetName = "street", HouseNumber = 1},
-            };
-            return Ok(userData);
+            
+            return Ok();
         }
     }
 }

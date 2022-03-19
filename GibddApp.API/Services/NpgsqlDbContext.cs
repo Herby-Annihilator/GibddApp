@@ -11,6 +11,10 @@ namespace GibddApp.API.Services
         {
             _connectionString = configuration["ConnectionString"];
         }
+        public NpgsqlDbContext(string connectionString)
+        {
+            this._connectionString = connectionString;
+        }
         public DbCommand Command => new Npgsql.NpgsqlCommand();
 
         public DbConnection Connection => new Npgsql.NpgsqlConnection(_connectionString);
