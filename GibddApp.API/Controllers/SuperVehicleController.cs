@@ -31,7 +31,7 @@ namespace GibddApp.API.Controllers
         }
 
         #region SuperVehicle
-        [HttpGet("/vehicle/{id:int}")]
+        [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CustomVehicle>> GetSuperVehicle(int id)
@@ -80,7 +80,7 @@ namespace GibddApp.API.Controllers
             return customVehicle;
         }
 
-        [HttpGet("/vehicle/all")]
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<CustomVehicle>>> GetAllSuperVehicles()
