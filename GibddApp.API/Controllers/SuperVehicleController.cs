@@ -12,7 +12,7 @@ namespace GibddApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomController : ControllerBase
+    public class SuperVehicleController : ControllerBase
     {
         private IRepository<Vehicle> _vehicleRepository;
         private IRepository<Color> _colorRepository;
@@ -20,7 +20,7 @@ namespace GibddApp.API.Controllers
         private IRepository<Model> _modelRepository;
         private IRepository<Category> _categoryRepository;
 
-        public CustomController(IRepository<Vehicle> vehicleRepository, IRepository<Color> colorRepository,
+        public SuperVehicleController(IRepository<Vehicle> vehicleRepository, IRepository<Color> colorRepository,
             IRepository<Mark> markRepository, IRepository<Model> modelRepository, IRepository<Category> categoryRepository)
         {
             _vehicleRepository = vehicleRepository;
@@ -30,17 +30,18 @@ namespace GibddApp.API.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        #region SuperVehicle
         [HttpGet("/vehicle/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CustomVehicle>> GetCustomVehicle(int id)
+        public async Task<ActionResult<CustomVehicle>> GetSuperVehicle(int id)
         {
-            CustomVehicle customVehicle = await GetCustomVehicleById(id);
+            CustomVehicle customVehicle = await GetSuperVehicleById(id);
             if (customVehicle == null)
             {
                 return NotFound("Vehicle was not found!");
             }
-            
+
             if (customVehicle.ColorName == null)
             {
                 return NotFound("Color was not found!");
@@ -61,7 +62,7 @@ namespace GibddApp.API.Controllers
             return Ok(customVehicle);
         }
 
-        protected virtual async Task<CustomVehicle> GetCustomVehicleById(int id)
+        protected virtual async Task<CustomVehicle> GetSuperVehicleById(int id)
         {
             CustomVehicle customVehicle;
             Vehicle vehicle = await _vehicleRepository.GetById(id);
@@ -82,7 +83,7 @@ namespace GibddApp.API.Controllers
         [HttpGet("/vehicle/all")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<CustomVehicle>>> GetAllCustomVehicles()
+        public async Task<ActionResult<IEnumerable<CustomVehicle>>> GetAllSuperVehicles()
         {
             IEnumerable<Vehicle> vehicles = await _vehicleRepository.GetAll();
             if (vehicles == null || vehicles.Count() == 0)
@@ -91,10 +92,11 @@ namespace GibddApp.API.Controllers
             List<CustomVehicle> customVehicles = new List<CustomVehicle>();
             foreach (Vehicle vehicle in vehicles)
             {
-                customVehicles.Add(await GetCustomVehicleById(vehicle.Id));
+                customVehicles.Add(await GetSuperVehicleById(vehicle.Id));
             }
             return Ok(customVehicles);
         }
+        #endregion
 
     }
 }

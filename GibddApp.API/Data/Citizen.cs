@@ -7,7 +7,7 @@ namespace GibddApp.API.Data
     [DbTableName("person")]
     public class Citizen : IEntity
     {
-        private int _id = 0;
+        protected int _id = 0;
         [DbAttributeName("id_person")]
         [JsonPropertyName("id")]
         public int Id { get => _id; set => _id = value; }
