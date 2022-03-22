@@ -29,7 +29,7 @@ namespace GibddApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDbContext, NpgsqlDbContext>();
-            services.AddScoped(typeof(IRepository<>), typeof(DefaultRepository<>));  // чтобы не регистрировать все типы подобных сервисов
+            services.AddTransient(typeof(IRepository<>), typeof(DefaultRepository<>));  // чтобы не регистрировать все типы подобных сервисов
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -7,7 +7,7 @@ namespace GibddApp.API.Data
     [DbTableName("vehicle")]
     public class Vehicle : IEntity
     {
-        private int _id;
+        protected int _id;
 
         [DbAttributeName("id_vehicle")]
         [JsonPropertyName("id")]
@@ -38,8 +38,8 @@ namespace GibddApp.API.Data
         public string VIN { get; set; } = nameof(VIN);
 
         [DbAttributeName("date_delivery")]
-        [JsonPropertyName("registratioDate")]
-        public DateTime RegistratioDate { get; set; } = DateTime.Now;
+        [JsonPropertyName("registrationDate")]
+        public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
         [DbAttributeName("id_model")]
         [JsonPropertyName("modelId")]
@@ -47,11 +47,11 @@ namespace GibddApp.API.Data
 
         [DbAttributeName("id_mark")]
         [JsonPropertyName("markId")]
-        public int MarklId { get; set; } = 0;
+        public int MarkId { get; set; } = 0;
 
         [DbAttributeName("id_color")]
-        [JsonPropertyName("colorlId")]
-        public int ColorlId { get; set; } = 0;
+        [JsonPropertyName("colorId")]
+        public int ColorId { get; set; } = 0;
 
         [DbAttributeName("id_category")]
         [JsonPropertyName("categoryId")]
