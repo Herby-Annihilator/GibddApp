@@ -36,5 +36,21 @@ namespace GibddApp.API.Data
         [JsonPropertyName("ownerId")]
         [DbAttributeName("id_person")]
         public int OwnerId { get; set; } = 0;
+
+        public bool EqualNotById(Passport passport)
+        {
+            if (passport == null)
+                return false;
+            if (ReferenceEquals(passport, this))
+                return true;
+            if (Series == passport.Series
+                && Number == passport.Number
+                && IssueDate == passport.IssueDate
+                && IssuedBy == passport.IssuedBy
+                && IsValid == passport.IsValid
+                && OwnerId == passport.OwnerId)
+                return true;
+            return false;
+        }
     }
 }

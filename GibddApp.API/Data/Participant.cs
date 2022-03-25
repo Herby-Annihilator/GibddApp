@@ -6,7 +6,7 @@ namespace GibddApp.API.Data
     [DbTableName("participant")]
     public class Participant : IEntity
     {
-        private int _id = 0;
+        protected int _id = 0;
 
         [JsonPropertyName("id")]
         [DbAttributeName("id_participant")]

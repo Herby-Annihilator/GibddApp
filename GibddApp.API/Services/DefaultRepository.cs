@@ -187,17 +187,25 @@ namespace GibddApp.API.Services
             {
                 if (property.Name != propertyName)
                 {
-                    if (property.PropertyType == typeof(DateTime))
+                    var attributes = property.GetCustomAttributes();
+                    foreach (Attribute attribute in attributes)
                     {
-                        var dateTime = (DateTime)property.GetValue(entity);
-                        builder.Append($"make_date({dateTime.Year}, {dateTime.Month}, {dateTime.Day}), ");
-                    }
-                    else if (property.PropertyType == typeof(string))
-                    {
-                        builder.Append($"'{property.GetValue(entity).ToString()}', ");
-                    }
-                    else
-                        builder.Append($"{property.GetValue(entity).ToString()}, ");
+                        if (attribute is DbAttributeNameAttribute)
+                        {
+                            if (property.PropertyType == typeof(DateTime))
+                            {
+                                var dateTime = (DateTime)property.GetValue(entity);
+                                builder.Append($"make_date({dateTime.Year}, {dateTime.Month}, {dateTime.Day}), ");
+                            }
+                            else if (property.PropertyType == typeof(string))
+                            {
+                                builder.Append($"'{property.GetValue(entity).ToString()}', ");
+                            }
+                            else
+                                builder.Append($"{property.GetValue(entity).ToString()}, ");
+                            break;
+                        }
+                    }                   
                 }  
             }
             string result = builder.ToString();

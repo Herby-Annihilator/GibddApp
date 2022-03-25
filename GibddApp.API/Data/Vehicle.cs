@@ -56,5 +56,27 @@ namespace GibddApp.API.Data
         [DbAttributeName("id_category")]
         [JsonPropertyName("categoryId")]
         public int CategoryId { get; set; } = 0;
+
+        public bool EqualNotById(Vehicle vehicle)
+        {
+            if (vehicle == null)
+                return false;
+            if (ReferenceEquals(vehicle, this))
+                return true;
+            if (Weight == vehicle.Weight
+                && MaxWeight == vehicle.MaxWeight
+                && CreationDate == vehicle.CreationDate
+                && ChassisNumber == vehicle.ChassisNumber
+                && BodyNumber == vehicle.BodyNumber
+                && VIN == vehicle.VIN
+                && RegistrationDate == vehicle.RegistrationDate
+                && ModelId == vehicle.ModelId
+                && MarkId == vehicle.MarkId
+                && ColorId == vehicle.ColorId
+                && CategoryId == vehicle.CategoryId)
+                return true;
+            return false;
+
+        }
     }
 }

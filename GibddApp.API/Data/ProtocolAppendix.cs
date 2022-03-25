@@ -6,7 +6,7 @@ namespace GibddApp.API.Data
     [DbTableName("protocol_app")]
     public class ProtocolAppendix : IEntity
     {
-        private int _id = 0;
+        protected int _id = 0;
 
         [DbAttributeName("id_protocol_app")]
         [JsonPropertyName("id")]

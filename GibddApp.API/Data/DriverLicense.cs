@@ -37,5 +37,20 @@ namespace GibddApp.API.Data
         [DbAttributeName("id_person")]
         public int OwnerId { get; set; } = 0;
 
+        public bool EqualNotById(DriverLicense license)
+        {
+            if (license == null)
+                return false;
+            if (ReferenceEquals(license, this))
+                return true;
+            if (Series == license.Series
+                && Number == license.Number
+                && StartDate == license.StartDate
+                && EndDate == license.EndDate
+                && IsValid == license.IsValid
+                && OwnerId == license.OwnerId)
+                return true;
+            return false;
+        }
     }
 }

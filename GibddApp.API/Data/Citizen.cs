@@ -51,6 +51,25 @@ namespace GibddApp.API.Data
         [JsonPropertyName("workPlaceAddressId")]
         [DbAttributeName("id_job_addr")]
         public int WorkPlaceAddressId { get; set; } = 0;
-        
+
+        public bool EqualNotById(Citizen citizen)
+        {
+            if (citizen == null)
+                return false;
+            if (ReferenceEquals(this, citizen))
+                return true;
+            if (citizen.SexId == SexId
+                && citizen.ResidentialAddressId == ResidentialAddressId
+                && citizen.RegistrationAddressId == RegistrationAddressId
+                && citizen.WorkPlaceAddressId == WorkPlaceAddressId
+                && citizen.FirstName == FirstName
+                && citizen.LastName == LastName
+                && citizen.Patronymic == Patronymic
+                && citizen.Phone == Phone
+                && citizen.PositionName == PositionName
+                && citizen.WorkPlaceName == WorkPlaceName)
+                return true;
+            return false;
+        }
     }
 }

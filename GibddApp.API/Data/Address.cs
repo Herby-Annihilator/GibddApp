@@ -32,6 +32,21 @@ namespace GibddApp.API.Data
         [DbAttributeName("home_number")]
         [JsonPropertyName("houseNumber")]
         public int HouseNumber { get; set; }
+
+        public bool EqualNotById(Address address)
+        {
+            if (address == null)
+                return false;
+            if (ReferenceEquals(this, address))
+                return true;
+            if (CountryName == address.CountryName
+                && RegionName == address.RegionName
+                && CityName == address.CityName
+                && StreetName == address.StreetName
+                && HouseNumber == HouseNumber)
+                return true;
+            return false;
+        }
         
     }
 }
