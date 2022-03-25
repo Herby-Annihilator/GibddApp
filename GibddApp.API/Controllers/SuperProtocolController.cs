@@ -52,11 +52,6 @@ namespace GibddApp.API.Controllers
                 throw new Exception($"Protocol was not found. Invalid id = {id}");
             SuperProtocol superProtocol = SuperProtocol.FromProtocol(protocol);
 
-            Employee employee = await _employeeRepository.GetById(protocol.CreatorId);
-            if (employee == null)
-                throw new Exception($"Protocol's creator was not found. Inavlid eployeeId = {protocol.CreatorId}");
-            superProtocol.Creator = employee;
-
             Address address = await _addressRepository.GetById(protocol.RoadAccidentAddressId);
             if (address == null)
                 throw new Exception($"RoadAccidentAddress was not found. RoadAccidentAddressId = {protocol.RoadAccidentAddressId}");
@@ -240,10 +235,6 @@ namespace GibddApp.API.Controllers
             {
                 superProtocol.CreationPalceAddressId = await CreateAddress(superProtocol.CreationPalceAddress);
                 superProtocol.RoadAccidentAddressId = await CreateAddress(superProtocol.RoadAccidentAddress);               
-
-                if (superProtocol.Creator == null)
-                    throw new Exception("Creator is null");
-                await _employeeRepository.CreateEntity(superProtocol.Creator);
 
                 await _protocolRepository.CreateEntity(superProtocol);
                 IEnumerable<Protocol> protocols = await _protocolRepository.GetAll();

@@ -11,9 +11,6 @@ namespace GibddApp.API.Data
         [JsonPropertyName("creationPalceAddress")]
         public Address CreationPalceAddress { get; set; }
 
-        [JsonPropertyName("creator")]
-        public Employee Creator { get; set; }
-
         [JsonPropertyName("participants")]
         public IEnumerable<SuperParticipant> Participants { get; set; }
 
