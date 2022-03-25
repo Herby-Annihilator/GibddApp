@@ -28,6 +28,29 @@ namespace GibddApp.API.Controllers
         protected IRepository<Mark> _markRepository;
         protected IRepository<Category> _categoryRepository;
 
+        public SuperProtocolController(IRepository<Protocol> protocolRepository, IRepository<Citizen> citizenRepository,
+            IRepository<Vehicle> vehicleRepository, IRepository<ProtocolAppendix> protocolAppendixRepository,
+            IRepository<Address> addressRepository, IRepository<RoleInRoadAccident> roleRepository,
+            IRepository<Employee> employeeRepository, IRepository<Participant> participantRepository,
+            IRepository<Passport> passportRepository, IRepository<DriverLicense> driverLicenseRepository, 
+            IRepository<Color> colorRepository, IRepository<Model> modelRepository, IRepository<Mark> markRepository,
+            IRepository<Category> categoryRepository)
+        {
+            _protocolRepository = protocolRepository;
+            _citizenRepository = citizenRepository;
+            _vehicleRepository = vehicleRepository;
+            _protocolAppendixRepository = protocolAppendixRepository;
+            _addressRepository = addressRepository;
+            _roleRepository = roleRepository;
+            _employeeRepository = employeeRepository;
+            _participantRepository = participantRepository;
+            _passportRepository = passportRepository;
+            _driverLicenseRepository = driverLicenseRepository;
+            _colorRepository = colorRepository;
+            _modelRepository = modelRepository;
+            _markRepository = markRepository;
+            _categoryRepository = categoryRepository;
+        }
 
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
