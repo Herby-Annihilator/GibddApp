@@ -17,6 +17,9 @@ namespace GibddApp.API.Data
         [JsonPropertyName("protocolAppendices")]
         public IEnumerable<SuperProtocolAppendix> ProtocolAppendices { get; set; }
 
+        [JsonPropertyName("creator")]
+        public Employee Creator { get; set; }
+
         //[JsonPropertyName("culprits")]
         //public IEnumerable<Participant> Сulprits { get; set; } // виновники
 
@@ -42,6 +45,7 @@ namespace GibddApp.API.Data
                 CreationPalceAddressId = this.CreationPalceAddressId,
                 Id = this.Id,
                 RoadAccidentAddressId = this.RoadAccidentAddressId,
+                EmployeeId = this.EmployeeId,
             };
         }
     }

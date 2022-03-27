@@ -4,9 +4,6 @@ namespace GibddApp.API.Data
 {
     public class CustomVehicle : Vehicle
     {
-        [JsonPropertyName("markName")]
-        public string MarkName { get; set; } = "mark";
-
         [JsonPropertyName("modelName")]
         public string ModelName { get; set; } = "model";
 
@@ -26,14 +23,13 @@ namespace GibddApp.API.Data
                 ColorId = vehicle.ColorId,
                 CreationDate = vehicle.CreationDate,
                 Id = vehicle.Id,
-                MarkId = vehicle.MarkId,
                 MaxWeight = vehicle.MaxWeight,
                 ModelId = vehicle.ModelId,
                 RegistrationDate = vehicle.RegistrationDate,
                 VIN = vehicle.VIN,
                 Weight = vehicle.Weight,
+                Number = vehicle.Number,
                 CategoryName = "categoryName",
-                MarkName = "markName",
                 ModelName = "modelName",
                 ColorName = "colorName",
             };

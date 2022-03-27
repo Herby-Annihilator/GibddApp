@@ -24,5 +24,9 @@ namespace GibddApp.API.Data
         [JsonPropertyName("creationPalceAddressId")]
         [DbAttributeName("id_compile_address")]
         public int CreationPalceAddressId { get; set; } = 0;
+
+        [JsonPropertyName("employeeId")]
+        [DbAttributeName("id_worker")]
+        public int EmployeeId { get; set; } = 0;
     }
 }

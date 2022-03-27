@@ -35,5 +35,21 @@ namespace GibddApp.API.Data
         [JsonPropertyName("positionId")]
         [DbAttributeName("id_position")]
         public int PositionId { get; set; } = 0;
+
+        public bool EqualNotById(Employee employee)
+        {
+            if (employee == null)
+                return false;
+            if (ReferenceEquals(employee, this))
+                return true;
+            if (FirstName == employee.FirstName
+                && LastName == employee.LastName
+                && Patronymic == employee.Patronymic
+                && SubdivisionId == employee.SubdivisionId
+                && RankId == employee.RankId
+                && PositionId == employee.PositionId)
+                return true;
+            return false;
+        }
     }
 }

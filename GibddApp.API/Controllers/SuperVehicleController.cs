@@ -50,10 +50,6 @@ namespace GibddApp.API.Controllers
             {
                 return NotFound("Model was not found!");
             }
-            else if (customVehicle.MarkName == null)
-            {
-                return NotFound("Mark was not found!");
-            }
             else if (customVehicle.CategoryName == null)
             {
                 return NotFound("Catgory was not found!");
@@ -70,10 +66,8 @@ namespace GibddApp.API.Controllers
                 return null;
             Color color = await _colorRepository.GetById(vehicle.ColorId);
             Model model = await _modelRepository.GetById(vehicle.ModelId);
-            Mark mark = await _markRepository.GetById(vehicle.MarkId);
             Category category = await _categoryRepository.GetById(vehicle.CategoryId);
             customVehicle = CustomVehicle.FromVehicle(vehicle);
-            customVehicle.MarkName = mark?.Name;
             customVehicle.ModelName = model?.Name;
             customVehicle.ColorName = color?.Name;
             customVehicle.CategoryName = category?.Name;

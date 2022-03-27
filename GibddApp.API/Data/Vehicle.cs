@@ -45,10 +45,6 @@ namespace GibddApp.API.Data
         [JsonPropertyName("modelId")]
         public int ModelId { get; set; } = 0;
 
-        [DbAttributeName("id_mark")]
-        [JsonPropertyName("markId")]
-        public int MarkId { get; set; } = 0;
-
         [DbAttributeName("id_color")]
         [JsonPropertyName("colorId")]
         public int ColorId { get; set; } = 0;
@@ -56,6 +52,10 @@ namespace GibddApp.API.Data
         [DbAttributeName("id_category")]
         [JsonPropertyName("categoryId")]
         public int CategoryId { get; set; } = 0;
+
+        [JsonPropertyName("number")]
+        [DbAttributeName("number")]
+        public string Number { get; set; } = $"{nameof(Number)}";
 
         public bool EqualNotById(Vehicle vehicle)
         {
@@ -71,7 +71,6 @@ namespace GibddApp.API.Data
                 && VIN == vehicle.VIN
                 && RegistrationDate == vehicle.RegistrationDate
                 && ModelId == vehicle.ModelId
-                && MarkId == vehicle.MarkId
                 && ColorId == vehicle.ColorId
                 && CategoryId == vehicle.CategoryId)
                 return true;

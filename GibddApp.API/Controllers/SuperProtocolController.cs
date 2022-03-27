@@ -85,6 +85,11 @@ namespace GibddApp.API.Controllers
                 throw new Exception($"CreationPalceAddressId was not found. CreationPalceAddressId = {protocol.CreationPalceAddressId}");
             superProtocol.CreationPalceAddress = address;
 
+            Employee employee = await _employeeRepository.GetById(protocol.EmployeeId);
+            if (employee == null)
+                throw new Exception($"There is no such employee with id = {protocol.EmployeeId}");
+            superProtocol.Creator = employee;
+
             IEnumerable<SuperParticipant> superParticipants = await GetSuperParticipants(protocol.Id);
             if (superParticipants == null)
                 throw new Exception($"There is no any participants in road accident with id = {id}");
@@ -209,14 +214,10 @@ namespace GibddApp.API.Controllers
             Model model = await _modelRepository.GetById(vehicle.ModelId);
             if (model == null)
                 throw new Exception($"Invalid model id = {vehicle.ModelId}");
-            Mark mark = await _markRepository.GetById(vehicle.MarkId);
-            if (mark == null)
-                throw new Exception($"Invalid mark id = {vehicle.MarkId}");
             Category category = await _categoryRepository.GetById(vehicle.CategoryId);
             if (category == null)
                 throw new Exception($"Invalid category id = {vehicle.CategoryId}");
             customVehicle = CustomVehicle.FromVehicle(vehicle);
-            customVehicle.MarkName = mark?.Name;
             customVehicle.ModelName = model?.Name;
             customVehicle.ColorName = color?.Name;
             customVehicle.CategoryName = category?.Name;
@@ -256,8 +257,10 @@ namespace GibddApp.API.Controllers
         {
             try
             {
-                superProtocol.CreationPalceAddressId = await CreateAddress(superProtocol.CreationPalceAddress);
-                superProtocol.RoadAccidentAddressId = await CreateAddress(superProtocol.RoadAccidentAddress);               
+                superProtocol.CreationPalceAddressId = await GetOrCreateAddress(superProtocol.CreationPalceAddress);
+                superProtocol.RoadAccidentAddressId = await GetOrCreateAddress(superProtocol.RoadAccidentAddress);
+
+                superProtocol.EmployeeId = await GetOrCreateEmplyee(superProtocol.Creator);
 
                 await _protocolRepository.CreateEntity(superProtocol);
                 IEnumerable<Protocol> protocols = await _protocolRepository.GetAll();
@@ -265,7 +268,7 @@ namespace GibddApp.API.Controllers
 
                 foreach (SuperParticipant superParticipant in superProtocol.Participants)
                 {
-                    await CreateSuperParticipant(superParticipant, protocolId);
+                    await GetOrCreateSuperParticipant(superParticipant, protocolId);
                 }
 
                 foreach (var item in superProtocol.ProtocolAppendices)
@@ -279,6 +282,19 @@ namespace GibddApp.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        protected async Task<int> GetOrCreateEmplyee(Employee employee)
+        {
+            IEnumerable<Employee> employees = await _employeeRepository.GetAll();
+            foreach (var item in employees)
+            {
+                if (item.EqualNotById(employee))
+                    return item.Id;
+            }
+            await _employeeRepository.CreateEntity(employee);
+            employees = await _employeeRepository.GetAll();
+            return employees.OrderBy((emp) => emp.Id).Last().Id;
         }
 
         protected async Task CreateSuperProtocolAppendix(SuperProtocolAppendix appendix, int protocolId)
@@ -305,7 +321,7 @@ namespace GibddApp.API.Controllers
             return vehicles.OrderBy((vehicle) => vehicle.Id).Last().Id;
         }
 
-        protected async Task CreateSuperParticipant(SuperParticipant superParticipant, int protocolId)
+        protected async Task GetOrCreateSuperParticipant(SuperParticipant superParticipant, int protocolId)
         {
             int ctitzenId = await CreateSuperUser(superParticipant.SuperUser);
             int roleId = await CreateRole(superParticipant.Role);
@@ -367,9 +383,9 @@ namespace GibddApp.API.Controllers
         protected async Task<int> CreateCustomCitizen(CustomCitizen customCitizen)
         {
             IEnumerable<Citizen> citizens = await _citizenRepository.GetAll();
-            customCitizen.RegistrationAddressId = await CreateAddress(customCitizen.RegistrationAddress);
-            customCitizen.ResidentialAddressId = await CreateAddress(customCitizen.ResidentialAddress);
-            customCitizen.WorkPlaceAddressId = await CreateAddress(customCitizen.WorkPlaceAddress);
+            customCitizen.RegistrationAddressId = await GetOrCreateAddress(customCitizen.RegistrationAddress);
+            customCitizen.ResidentialAddressId = await GetOrCreateAddress(customCitizen.ResidentialAddress);
+            customCitizen.WorkPlaceAddressId = await GetOrCreateAddress(customCitizen.WorkPlaceAddress);
             foreach (Citizen citizen in citizens)
             {
                 if (citizen.EqualNotById(customCitizen))
@@ -380,7 +396,7 @@ namespace GibddApp.API.Controllers
             return citizens.OrderBy((citizen) => citizen.Id).Last().Id;
         }
 
-        protected async Task<int> CreateAddress(Address address)
+        protected async Task<int> GetOrCreateAddress(Address address)
         {
             IEnumerable<Address> addresses = await _addressRepository.GetAll();
             foreach (Address addr in addresses)
